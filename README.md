@@ -47,7 +47,7 @@ Para rodar a API, use o seguinte comando:
 dotnet run
 ```
 
-Isso vai compilar e iniciar o servidor. Você verá um log no terminal informando que o servidor está rodando, normalmente na URL `http://localhost:5000` (ou outra porta, dependendo da configuração).
+Isso vai compilar e iniciar o servidor. Você verá um log no terminal informando que o servidor está rodando, normalmente na URL `http://localhost:5007` (ou outra porta, dependendo da configuração).
 
 ---
 
