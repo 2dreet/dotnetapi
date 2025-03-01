@@ -1,4 +1,6 @@
 # Binários e arquivos de build
+bin/
+obj/
 *.dll
 *.exe
 *.pdb
