@@ -1,38 +1,41 @@
 
+using MinhaApi.repositories;
+
 public class UsuarioService : IUsuarioService
 {
 
-    public static List<Usuario> usuarios = new List<Usuario>();
+    private readonly IUsuarioRepository _usuarioRepository;
 
-   
-
-    public void criar(string name)
+    public UsuarioService(IUsuarioRepository _usuarioRepository)
     {
-        Usuario usuario = Usuario.create(name);
+        this._usuarioRepository = _usuarioRepository;
+    }
 
-        usuario.Id = usuarios.Count + 1;
-
-        UsuarioService.usuarios.Add(usuario);
+    public void criar(NovoUsuarioRequest request)
+    {
+        _usuarioRepository.criar(Usuario.mapFrom(request));
     }
 
     public Usuario? obterPorId(int id)
     {
-        return UsuarioService.usuarios.FirstOrDefault(usuario => usuario.Id == id);
+        return _usuarioRepository.obterPorId(id);
     }
 
     public List<Usuario> obterTodos()
     {
-        return UsuarioService.usuarios;
+        return _usuarioRepository.obterTodos();
     }
 
-    public Boolean atualizar(int id, string nome)
+    public Boolean atualizar(int id, AtualizarUsuarioRequest request)
     {
         Usuario? usuario = obterPorId(id);
         if (usuario == null) {
             return false;
         }
 
-        usuario.nome = nome;
+        usuario.nome = request.nome;
+        
+        _usuarioRepository.atualizar(usuario);
 
         return true;
 

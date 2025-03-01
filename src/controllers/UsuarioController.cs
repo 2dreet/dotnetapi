@@ -15,7 +15,7 @@ namespace MinhaApi.controllers {
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Usuario> getById(int id) {
+        public ActionResult<UsuarioResult> getById(int id) {
 
             Usuario? usuario = _usuarioService.obterPorId(id);
             
@@ -23,23 +23,24 @@ namespace MinhaApi.controllers {
                 return NotFound(new Error($"Usuário {id}, não encontrado"));
             }
 
-            return Ok(usuario);
+            return Ok(UsuarioResult.mapFrom(usuario));
         }
 
         [HttpPost]
-        public void criarUsuario(NovoUsuario novoUsuario) {
-            _usuarioService.criar(novoUsuario.Nome);
+        public void criarUsuario(NovoUsuarioRequest request) {
+            _usuarioService.criar(request);
         }
 
         [HttpPut("{id}")]
-        public ActionResult atualizarUsuario(int id, NovoUsuario novoUsuario) {
-            Boolean status = _usuarioService.atualizar(id, novoUsuario.Nome);
+        public ActionResult atualizarUsuario(int id, AtualizarUsuarioRequest request) {
+            Boolean status = _usuarioService.atualizar(id, request);
             return status ? Ok() : NotFound(new Error($"Usuário {id}, não encontrado"));;
         }
 
         [HttpGet("todos")]
-        public ActionResult<List<Usuario>> getAll() {
-            return Ok(_usuarioService.obterTodos());
+        public ActionResult<List<UsuarioResult>> getAll() {
+            List<UsuarioResult> reponse = UsuarioResult.mapFrom(_usuarioService.obterTodos());
+            return Ok(reponse);
         }
 
     }

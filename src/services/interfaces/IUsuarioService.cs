@@ -1,8 +1,8 @@
 public interface IUsuarioService
 {
-    void criar(string name);
+    void criar(NovoUsuarioRequest request);
 
-    Boolean atualizar(int id, string nome);
+    Boolean atualizar(int id, AtualizarUsuarioRequest request);
 
     Usuario? obterPorId(int id);
     List<Usuario> obterTodos();

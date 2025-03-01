@@ -1,0 +1,59 @@
+# Binários e arquivos de build
+*.dll
+*.exe
+*.pdb
+*.app/
+*.ipa/
+*.dmg
+*.iso
+
+# Configuração do Visual Studio e Rider
+.vscode/
+.idea/
+*.suo
+*.user
+*.vs/
+*.csproj.user
+*.rsuser
+*.sln.docstates
+
+# Logs e arquivos temporários
+logs/
+*.log
+*.swp
+*.swo
+hs_err_pid*
+
+# Configurações de ambiente e segurança
+.env
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Test.json
+appsettings.Staging.json
+
+# Dependências geradas automaticamente
+packages/
+node_modules/
+wwwroot/lib/
+*.nupkg
+*.snupkg
+
+# Cache do NuGet
+.nuget/packages/
+*.lock.json
+
+# Banco de dados local
+*.db
+*.mdf
+*.ldf
+*.sqlite
+Migrations/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db

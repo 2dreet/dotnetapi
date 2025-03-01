@@ -1,9 +1,16 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using MinhaApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=base.db"));
+
+builder.Services.AddApplicationRepository();
 
 builder.Services.AddServices();
 
