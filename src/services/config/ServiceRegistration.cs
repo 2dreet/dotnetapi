@@ -4,5 +4,8 @@ public static class ServiceRegistration
     {
         // Registro dos serviços
         services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<ILivroService, LivroService>();
+
+        services.AddScoped<IJwtService, JwtService>();
     }
 }

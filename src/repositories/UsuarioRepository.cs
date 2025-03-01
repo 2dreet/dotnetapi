@@ -25,7 +25,12 @@ namespace MinhaApi.repositories {
 
         public Usuario? obterPorId(int id)
         {
-            return _context.Usuarios.Find(id);
+            return _context.Usuarios.Where(usuario => usuario.Id == id).FirstOrDefault();
+        }
+
+        public Usuario? obterPorLogin(string login)
+        {
+            return _context.Usuarios.Where(usuario => usuario.login == login).FirstOrDefault();
         }
 
         public List<Usuario> obterTodos()
@@ -33,13 +38,8 @@ namespace MinhaApi.repositories {
             return _context.Usuarios.ToList();
         }
 
-        public void remover(int id)
+        public void remover(Usuario usuario)
         {
-            Usuario? usuario = obterPorId(id);
-            if (usuario == null) {
-                return;
-            }
-
             _context.Usuarios.Remove(usuario);
             salvar();
         }

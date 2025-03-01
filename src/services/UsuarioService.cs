@@ -26,18 +26,35 @@ public class UsuarioService : IUsuarioService
         return _usuarioRepository.obterTodos();
     }
 
-    public Boolean atualizar(int id, AtualizarUsuarioRequest request)
+    public void atualizar(Usuario usuario, AtualizarUsuarioRequest request)
     {
-        Usuario? usuario = obterPorId(id);
-        if (usuario == null) {
-            return false;
-        }
-
         usuario.nome = request.nome;
         
         _usuarioRepository.atualizar(usuario);
+    }
 
-        return true;
+    public Usuario? obterPorLogin(string login)
+    {
+        return _usuarioRepository.obterPorLogin(login);
+    }
 
+    public void deletar(Usuario usuario)
+    {
+        _usuarioRepository.remover(usuario);
+    }
+
+    public Usuario? login(LoginRequest request)
+    {
+        Usuario? usuario = obterPorLogin(request.login);
+
+        if(usuario == null) {
+            return null;
+        }
+
+        if (usuario.senha != request.senha) {
+            return null;
+        }
+
+        return usuario;
     }
 }

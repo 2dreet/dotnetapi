@@ -14,6 +14,8 @@ builder.Services.AddApplicationRepository();
 
 builder.Services.AddServices();
 
+builder.Services.AddSecurityJwtServices(builder.Configuration);
+
 // Adiciona o serviço de Controllers
 builder.Services.AddControllers(); // Adiciona o serviço de Controllers
 

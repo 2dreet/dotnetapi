@@ -16,6 +16,7 @@ namespace MinhaApi.Data {
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Livro> Livros { get; set; }
     }
 
 }

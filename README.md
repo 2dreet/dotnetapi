@@ -31,6 +31,8 @@ Agora, instale os pacotes necessários:
 ```bash
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+
 ```
 
 ### **4️⃣ Criar e Aplicar Migrações**

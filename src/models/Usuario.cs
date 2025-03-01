@@ -7,6 +7,11 @@ public class Usuario
 
     public string senha { get; set; }
 
+    private Usuario() {
+        this.nome = "";
+        this.login = "";
+        this.senha = "";
+    }
     public Usuario(string nome, string login, string senha)
     {
         this.nome = nome;

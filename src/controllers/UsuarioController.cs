@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MinhaApi.controllers {
@@ -15,6 +16,7 @@ namespace MinhaApi.controllers {
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<UsuarioResult> getById(int id) {
 
             Usuario? usuario = _usuarioService.obterPorId(id);
@@ -26,21 +28,63 @@ namespace MinhaApi.controllers {
             return Ok(UsuarioResult.mapFrom(usuario));
         }
 
-        [HttpPost]
-        public void criarUsuario(NovoUsuarioRequest request) {
-            _usuarioService.criar(request);
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult atualizarUsuario(int id, AtualizarUsuarioRequest request) {
-            Boolean status = _usuarioService.atualizar(id, request);
-            return status ? Ok() : NotFound(new Error($"Usuário {id}, não encontrado"));;
-        }
-
         [HttpGet("todos")]
+        [Authorize]
         public ActionResult<List<UsuarioResult>> getAll() {
             List<UsuarioResult> reponse = UsuarioResult.mapFrom(_usuarioService.obterTodos());
             return Ok(reponse);
+        }
+
+        [HttpPost]
+        public ActionResult criarUsuario([FromBody] NovoUsuarioRequest request) {
+            Usuario? usuario = _usuarioService.obterPorLogin(request.login);    
+
+            if (usuario != null) {
+                return NotFound(new Error($"Login já em uso"));
+            }    
+
+            _usuarioService.criar(request);
+
+            return Created();
+        }
+
+        [HttpPut]
+        [Authorize]
+        public ActionResult atualizarUsuario([FromBody] AtualizarUsuarioRequest request) {
+            var login = User.Identity?.Name; 
+
+            if (login == null) {
+                return NotFound(new Error($"Usuário, não encontrado"));
+            }
+            
+            Usuario? usuario = _usuarioService.obterPorLogin(login);
+
+            if (usuario == null) {
+                return NotFound(new Error($"Usuário, não encontrado"));
+            }
+
+            _usuarioService.atualizar(usuario, request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public ActionResult delete() {
+            var login = User.Identity?.Name; 
+
+            if (login == null) {
+                return NotFound(new Error($"Usuário, não encontrado"));
+            }
+
+            Usuario? usuario = _usuarioService.obterPorLogin(login);
+
+            if (usuario == null) {
+                return NotFound(new Error($"Usuário, não encontrado"));
+            }
+
+            _usuarioService.deletar(usuario);
+            
+            return Ok();
         }
 
     }
